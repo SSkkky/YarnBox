@@ -46,3 +46,11 @@ button{
   font-family: 'Noto Sans KR';
   cursor: pointer;
 }
+
+input, textarea{
+  font-family: 'Noto Sans KR';
+}
+
+ul, li{
+  list-style: none;
+}

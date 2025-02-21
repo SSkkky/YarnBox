@@ -6,21 +6,21 @@ import SearchBar from "@/components/SearchBar";
 
 const Container = styled.section`
     padding: 2rem;
-    width: 100%;
-    height: calc(100svh - 160px);
     display: flex;
     flex-direction: column;
     align-items: center;
 `
 
-const Schedule = (props) => {
-    const {searchText} = props;
+type scheduleProps = {
+    searchText : string,
+    changeSearchInputValue: (newValue:string) => void;
+}
+
+const Schedule = (props:scheduleProps) => {
 
     return(
     <Container>
-        <SearchBar
-            searchText={searchText}
-        />
+        <SearchBar {...props}/>
       </Container>
     )
 }

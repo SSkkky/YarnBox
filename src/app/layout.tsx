@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { Noto_Sans_KR } from "next/font/google";
+import SessionProviderWrapper from '@/components/SessionProviderWrapper';
+import StyledComponentsRegistry from "@/lib/StyledComponentsRegistry";
 import "./globals.css";
 
 // ✅ Noto_Sans_KR 불러오기
 const notoSansKR = Noto_Sans_KR({
   weight: ["400", "700"],
-  display: "swap",      
+  display: "swap",
+  preload: false,
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
@@ -21,7 +25,11 @@ export default function RootLayout({
   return (
     <html lang="kr">
       <body className={notoSansKR.className}>
-        {children}
+        <SessionProviderWrapper>
+          <StyledComponentsRegistry>
+            {children}
+          </StyledComponentsRegistry>
+        </SessionProviderWrapper>
       </body>
     </html>
   );

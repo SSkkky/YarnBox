@@ -11,6 +11,7 @@ const TextComp = styled.div`
     align-items: center;
     font-weight: 700;
     color: ${color.text};
+    white-space: nowrap;
 
     .dot{
         width: 6px;
@@ -20,7 +21,11 @@ const TextComp = styled.div`
     }
 `
 
-const Text = (props) => {
+type textProps = {
+    text: string
+}
+
+const Text = (props:textProps) => {
     return(
         <TextComp>
             <p>{props.text}</p>

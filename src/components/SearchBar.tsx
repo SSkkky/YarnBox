@@ -45,11 +45,22 @@ const SearchBarComp = styled.section`
     }
 `
 
-const SearchBar = (props) => {
+type searchbarProps = {
+    searchText: string;
+    changeSearchInputValue: (newValue:string) => void
+}
+
+const SearchBar = (props:searchbarProps) => {
     
     return(
         <SearchBarComp>
-            <input type="text" />
+            <input
+                type="text"
+                min={1}
+                placeholder="검색어를 입력해주세요"
+                value={props.searchText || ""}
+                onChange={(e) => props.changeSearchInputValue(e.currentTarget.value)}
+            />
             <button className="searchButton">
                 <SearchRoundedIcon/>
             </button>

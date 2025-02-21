@@ -1,6 +1,7 @@
 "use client"
 
-import React from 'react';
+import React from 'react';;
+import type { JSX } from 'react'; 
 import styled from 'styled-components';
 import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded';
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
@@ -9,6 +10,20 @@ import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import TextComp from './Text';
 import { color } from '@/config/config';
+
+type NavigationProps = {
+    activeMenu: number;
+    clickMenuButton: (id: number) => void;
+    posting: () => void;
+};
+
+type MenuButtonProps = {
+    id: number;
+    text: string;
+    icon: JSX.Element;
+    isActive: boolean;
+    onClick: (id: number) => void;
+}
 
 const Nav = styled.nav`
     width: 100%;
@@ -26,6 +41,7 @@ const Nav = styled.nav`
         gap: 1rem;
 
         button{
+            width: calc((100svw - 2rem) / 5);
             background: transparent;
             border: 0;
             padding: 0.5rem;
@@ -43,6 +59,7 @@ const Nav = styled.nav`
         }
 
         .add{
+            width: 45px;
             position: absolute;
             left: 50%;
             transition: 0.3s ease;
@@ -66,8 +83,8 @@ const Nav = styled.nav`
     }
 `
 
-const Navigation = (props) => {
-    const {activeMenu, clickMenuButton} = props;
+const Navigation = (props:NavigationProps) => {
+    const {activeMenu, clickMenuButton, posting} = props;
 
     const menuItems = [
         { id: 0, text: "뜨케줄", icon: <CalendarMonthRoundedIcon /> },
@@ -76,7 +93,7 @@ const Navigation = (props) => {
         { id: 3, text: "설정", icon: <SettingsRoundedIcon /> },
     ];
 
-    const MenuButton = ({ id, text, icon, isActive, onClick }) => (
+    const MenuButton = ({ id, text, icon, isActive, onClick }:MenuButtonProps) => (
         <button onClick={() => onClick(id)}>
             {isActive ? <TextComp text={text} /> : icon}
         </button>
@@ -95,7 +112,12 @@ const Navigation = (props) => {
                         onClick={clickMenuButton}
                     />
                 ))}
-                <button className='add'><AddRoundedIcon/></button>
+                <button
+                    className='add'
+                    onClick={posting}
+                >
+                    <AddRoundedIcon/>
+                    </button>
             </section>
         </Nav>
     )
