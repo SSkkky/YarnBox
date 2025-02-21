@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react";
 import styled from "styled-components";
@@ -27,11 +28,18 @@ const Contents = styled.section`
 `
 
 type SessionType = {
-  expires?: string;
-  user?: {
-    image?: string | null;
-    name?: string | null;
+  data: {
+    level: number;
+    exp: number;
   };
+  id: string;
+  image: string | null;
+  name: string;
+  setting: {
+    theme: string;
+    originName: boolean;
+    setName: string;
+  }
 };
 
 export default function Home() {
@@ -46,17 +54,30 @@ export default function Home() {
   useEffect(() => {
     if (status !== 'loading') setLoading(false);
     if (status === "authenticated" && session) {
-      setIsLogin(true);
-      setUser({
-        user: {
-          name: session.user?.name ?? undefined,
-          image: session.user?.image ?? undefined,
-        },
-      });
-    } else{
+
+      // 유저 데이터 불러오기
+      const userid = session.user.id as string;
+      getUserData(userid);
+
+    } else {
       setIsLogin(false);
     }
   }, [status, session]);
+
+  const getUserData = async (id: string) => {
+    await axios.get('/api/user', {
+      params: { id },
+    })
+      .then((response) => {
+        // console.log('통신 성공:', response.data);
+        setUser(response.data);
+      })
+      .catch((error) => {
+        console.error('통신 실패:', error);
+      })
+
+    setIsLogin(true);
+  }
 
   useEffect(() => {
     // 비로그인 상태로 설정메뉴 진입시
@@ -94,14 +115,14 @@ export default function Home() {
       case 1:
         return <YarnBox {...props} />;
       case 3:
-        if(status === "authenticated") return <Setting {...props} />;
+        if (status === "authenticated") return <Setting {...props} />;
       default:
         return <YarnBox {...props} />
     }
   };
 
   const posting = () => {
-    if(status === "unauthenticated"){
+    if (status === "unauthenticated") {
       router.push('/auth/signin');
       return;
     }

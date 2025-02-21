@@ -4,6 +4,23 @@ import connectToDatabase from '@/lib/mongodb';
 import User from '@/models/User';
 import {withAuth} from '@/middleware/authMiddleware';
 
+async function getHandler(request: NextRequest) {
+  try{
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    await connectToDatabase();
+    const user = await User.findOne({id : id});
+
+    if(user) {
+      return NextResponse.json(user);
+    } else {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+  } catch(error){
+    console.log(error);
+  }
+}
+
 async function deleteAccountHandler(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -23,4 +40,5 @@ async function deleteAccountHandler(request: NextRequest) {
   }
   
 
+export const GET = await withAuth(getHandler);
 export const DELETE = await withAuth(deleteAccountHandler);

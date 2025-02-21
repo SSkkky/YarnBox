@@ -14,7 +14,7 @@ interface SettingType {
 interface UserDocument extends Document {
   id: string;
   name: string;
-  image: string;
+  image: string | null;
   data: ServiceType;
   setting: SettingType;
 }
@@ -22,7 +22,7 @@ interface UserDocument extends Document {
 const userSchema = new Schema<UserDocument>({
   id: { type: String, required: true, unique: true },
   name: { type: String, required: true },
-  image: { type: String, required: true },
+  image: { type: String, default: null,  required: false },
   data: {
     level: { type: Number, default: 1 },
     exp: { type: Number, default: 0 },

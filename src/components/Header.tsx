@@ -64,11 +64,18 @@ const HeaderStyle = styled.header`
     }
 `
 type SessionType = {
-    expires?: string;
-    user?: {
-        image?: string | null;
-        name?: string | null;
-    };
+  data: {
+    level: number;
+    exp: number;
+  };
+  id: string;
+  image: string | null;
+  name: string;
+  setting: {
+    theme: string;
+    originName: boolean;
+    setName: string;
+  }
 };
 
 type headerType = {
@@ -91,14 +98,14 @@ const Header = (props: headerType) => {
                 <Link href="/">MY YARN BOX</Link>
             </h1>
             <div className="user">
-                {status === "authenticated"
+                {status === "authenticated" && Object.keys(user).length > 0
                     ? <>
                         <div className="text">
-                            <p>{user?.user?.name || "뜨개인"}</p>
-                            <span>#LV_</span>
+                            <p>{user.name || "뜨개인"}</p>
+                            <span>#LV.{user.data.level}</span>
                         </div>
                         <div className="profile"
-                            style={{ backgroundImage: `url(${status === "authenticated" ? user?.user?.image : defaultBG})` }}></div>
+                            style={{ backgroundImage: `url(${(user.image) ? user?.image : defaultBG})` }}></div>
                     </>
                     : <button className="login" onClick={() => signIn('kakao')}>로그인</button>
                 }
