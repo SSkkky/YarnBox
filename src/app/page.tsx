@@ -13,6 +13,7 @@ import YarnBox from "@/components/yarnBox/YarnBox";
 import Setting from "@/components/setting/Setting";
 import Loading from "@/components/common/Loading";
 import PostButton from "@/components/nav/PostButton";
+import Post_Schedule from "@/components/post/Schedule";
 
 const App = styled.section`
     width: 100%;
@@ -45,6 +46,7 @@ type SessionType = {
 
 export default function Home() {
   const router = useRouter();
+  const [postable, setPostable] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState<SessionType>({});
@@ -52,6 +54,10 @@ export default function Home() {
   const [activeMenu, setActiveMenu] = useState(0);
   const [searchText, setSearchText] = useState("");
 
+  useEffect(() => {
+    console.log(postable);
+  }, [postable])
+  
   useEffect(() => {
     if (status !== 'loading') setLoading(false);
     if (status === "authenticated" && session) {
@@ -79,7 +85,7 @@ export default function Home() {
 
     setIsLogin(true);
   }
-
+  
   useEffect(() => {
     // 비로그인 상태로 설정메뉴 진입시
     if (activeMenu === 3 && status === "unauthenticated") {
@@ -96,6 +102,7 @@ export default function Home() {
 
   const clickMenuButton = (i: number) => {
     setActiveMenu(i);
+    setPostable(false);
   }
 
   const changeSearchInputValue = (newValue: string) => {
@@ -105,14 +112,20 @@ export default function Home() {
   const initAll = () => {
     setActiveMenu(0);
     setSearchText("");
+    setPostable(false);
+  }
+
+  const backButton = () => {
+    setPostable(false);
+    // 작성중인 글 init 필요
   }
 
   const renderComponent = () => {
-    const props = { activeMenu, searchText, changeSearchInputValue, initAll };
+    const props = { activeMenu, searchText, changeSearchInputValue, initAll, backButton };
 
     switch (activeMenu) {
       case 0:
-        return <Schedule {...props} />;
+        return postable ? <Post_Schedule {...props} /> : <Schedule {...props} />;
       case 1:
         return <YarnBox {...props} />;
       case 3:
@@ -123,17 +136,20 @@ export default function Home() {
   };
 
   const posting = () => {
+    setPostable(true);
+
     if (status === "unauthenticated") {
       router.push('/auth/signin');
       return;
     }
-
-    console.log(activeMenu);
+    
+    console.log('activeMenu = ', activeMenu);
   }
 
   const navProps = { activeMenu, clickMenuButton, posting };
   const headerProps = { initAll, user, status };
   const postButtonProps = { posting };
+
   return (
     <App>
       <Header {...headerProps} />
@@ -141,7 +157,7 @@ export default function Home() {
         {loading ? <Loading /> : renderComponent()}
       </Contents>
       <Navigation {...navProps} />
-      <PostButton {...postButtonProps} />
+      {(activeMenu !== 3 && !postable) && <PostButton {...postButtonProps} />}
     </App>
   );
 }

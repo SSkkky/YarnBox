@@ -45,6 +45,8 @@ a {
 button{
   font-family: 'Noto Sans KR';
   cursor: pointer;
+  background: transparent;
+  border: 0;
 }
 
 input, textarea{

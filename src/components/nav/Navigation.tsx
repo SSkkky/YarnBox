@@ -7,7 +7,6 @@ import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded';
 import AccountBalanceWalletRoundedIcon from '@mui/icons-material/AccountBalanceWalletRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import CalendarMonthRoundedIcon from '@mui/icons-material/CalendarMonthRounded';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import TextComp from './Text';
 import { color } from '@/config/config';
 
