@@ -1,4 +1,6 @@
 "use client"
+import { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import styled from "styled-components";
@@ -56,7 +58,14 @@ height: 100svh;
 `
 
 export default function SignInPage() {{
+  const { status } = useSession();
   const router = useRouter();
+
+   useEffect(() => {
+    if (status === 'authenticated') {
+      router.push('/');
+    }
+  }, [status, router]);
 
   return (
     <SignIn>

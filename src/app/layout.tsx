@@ -23,14 +23,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="kr">
-      <body className={notoSansKR.className}>
-        <SessionProviderWrapper>
-          <StyledComponentsRegistry>
+    <StyledComponentsRegistry>
+      <html lang="kr">
+        <body className={notoSansKR.className}>
+          <SessionProviderWrapper>
             {children}
-          </StyledComponentsRegistry>
-        </SessionProviderWrapper>
-      </body>
-    </html>
+          </SessionProviderWrapper>
+        </body>
+      </html>
+    </StyledComponentsRegistry>
   );
 }
