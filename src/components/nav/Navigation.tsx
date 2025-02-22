@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react';;
+import React from 'react';
 import type { JSX } from 'react'; 
 import styled from 'styled-components';
 import CardGiftcardRoundedIcon from '@mui/icons-material/CardGiftcardRounded';
@@ -39,9 +39,10 @@ const Nav = styled.nav`
         display: flex;
         justify-content: space-between;
         gap: 1rem;
+        position: relative;
 
         button{
-            width: calc((100svw - 2rem) / 5);
+            width: calc((100svw - 2rem) / 4);
             background: transparent;
             border: 0;
             padding: 0.5rem;
@@ -52,33 +53,6 @@ const Nav = styled.nav`
             svg{
                 color: ${color.gray};
             }
-        }
-
-        button:nth-child(2){
-            margin-right : calc(100svw / 5);
-        }
-
-        .add{
-            width: 45px;
-            position: absolute;
-            left: 50%;
-            transition: 0.3s ease;
-            transform: translateX(-50%);
-            border-width: 1px;
-            border-color: ${color.text};
-            border-style: solid;
-            border-radius: 1rem;
-            background: ${color.blue};
-
-            svg{
-                color: ${color.white};
-            }
-        }
-
-        .add:hover{
-            border-radius: 10rem;
-            color: ${color.white};
-            background: ${color.text};
         }
     }
 `
@@ -112,12 +86,6 @@ const Navigation = (props:NavigationProps) => {
                         onClick={clickMenuButton}
                     />
                 ))}
-                <button
-                    className='add'
-                    onClick={posting}
-                >
-                    <AddRoundedIcon/>
-                    </button>
             </section>
         </Nav>
     )

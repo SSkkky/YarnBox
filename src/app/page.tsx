@@ -12,6 +12,7 @@ import Schedule from "@/components/schedule/Schedule";
 import YarnBox from "@/components/yarnBox/YarnBox";
 import Setting from "@/components/setting/Setting";
 import Loading from "@/components/common/Loading";
+import PostButton from "@/components/nav/PostButton";
 
 const App = styled.section`
     width: 100%;
@@ -132,7 +133,7 @@ export default function Home() {
 
   const navProps = { activeMenu, clickMenuButton, posting };
   const headerProps = { initAll, user, status };
-
+  const postButtonProps = { posting };
   return (
     <App>
       <Header {...headerProps} />
@@ -140,6 +141,7 @@ export default function Home() {
         {loading ? <Loading /> : renderComponent()}
       </Contents>
       <Navigation {...navProps} />
+      <PostButton {...postButtonProps} />
     </App>
   );
 }
