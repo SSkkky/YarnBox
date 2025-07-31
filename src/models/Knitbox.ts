@@ -11,6 +11,7 @@ interface IKnitbox extends Document {
 }
 
 const KnitboxSchema: Schema = new Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref:'users', required: true },
   name: { type: String, required: true },
   maker: { type: String, required: true },
   brand: { type: String, required: true },
