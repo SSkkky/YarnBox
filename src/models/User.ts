@@ -17,6 +17,8 @@ interface UserDocument extends Document {
   image: string | null;
   data: ServiceType;
   setting: SettingType;
+  provider: string,
+  createdAt: Date;
 }
 
 const userSchema = new Schema<UserDocument>({
@@ -32,6 +34,8 @@ const userSchema = new Schema<UserDocument>({
     originName: { type: Boolean, default: false },
     setName: { type: String, default: '' },
   },
+  provider: { type: String, default: 'google' },
+  createdAt: { type: Date, default: Date.now },
 }, {collection: 'users'});
 
 const User = mongoose.models.users || mongoose.model<UserDocument>('users', userSchema);

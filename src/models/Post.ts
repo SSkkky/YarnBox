@@ -1,22 +1,32 @@
 // src\models\Post.ts
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const PostSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
+const PostSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
+    tags: [String],
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
+      },
+    ],
   },
-  content: {
-    type: String,
-    required: true,
-  },
-  author: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'users',
-    required: true
+  {
+    timestamps: true,
   }
-}, {
-  timestamps: true,
-});
+);
 
-export default mongoose.models.Post || mongoose.model('Post', PostSchema);
+export default mongoose.models.Post || mongoose.model("Post", PostSchema);

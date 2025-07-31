@@ -17,6 +17,11 @@ const KnitboxSchema: Schema = new Schema({
   brand: { type: String, required: true },
   quantity: { type: Number, required: true },
   color: { type: Number, required: true },
+  type: {
+    type: String,
+    enum: ['yarn', 'needle', 'hook', 'scissors'],
+    required: true
+  }
 });
 
 export default mongoose.models.Knitbox || mongoose.model<IKnitbox>('Knitbox', KnitboxSchema);
